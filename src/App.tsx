@@ -12,7 +12,7 @@ import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Homepage from "./pages/Homepage";
-import Contact from "./pages/Contact";
+//import Contact from "./pages/Contact";
 import Search from "./pages/Search";
 import ProductPage from "./pages/ProductPage";
 import AdminUploadProduct from "./pages/admin/AdminUploadProduct";

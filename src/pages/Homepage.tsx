@@ -19,8 +19,8 @@ const Homepage = () => {
     },
     {
       name: "THE LAST OF US: PART II",
-      price: 70.0,
-      slug: "the-last-of-us-part-2",
+      price: 69.99,
+      slug: "the-last-of-us-part-ii",
       image: require("../assets/img/the-last-of-us.webp"),
     },
     {
@@ -28,12 +28,6 @@ const Homepage = () => {
       price: 70.0,
       slug: "the-last-of-us",
       image: require("../assets/img/thelast.png"),
-    },
-    {
-      name: "Crash bandicoot 2",
-      price: 20.59,
-      slug: "crash-bandicoot-2",
-      image: require("../assets/img/the-last-of-us.webp"),
     },
   ];
 

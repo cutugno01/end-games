@@ -79,22 +79,33 @@
     font-size: 1.8rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     width: 100%;
+    padding-left: 0.5rem;
+  }
+
+  &-button-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
   }
 
   &-button{
-    width: 100%;
+    width: 95%;
     background-color: $color-red;
     outline: none;
     border: none;
     color: $color-white;
     font-size: 1.6rem;
     padding: 0.8rem 0;
+    margin: auto;
     cursor: pointer;
     opacity: 0.9;
     transition: 0.15s;
     box-shadow: 0 0 0 $color-red;
+    border-radius: 10px;
 
     &:hover{
       opacity: 1;

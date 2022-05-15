@@ -1,0 +1,12 @@
+.login{
+  &-forgot{
+    margin-top: 0.7rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.1s;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+}

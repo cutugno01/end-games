@@ -1,0 +1,17 @@
+.profile{
+
+  &-logout-container{
+    opacity: 0.75;
+    transition: 0.15s;
+    cursor: pointer;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
+  &-logout-icon{
+    width: 1.8rem;
+    color: $color-red;
+  }
+}

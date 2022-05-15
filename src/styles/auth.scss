@@ -1,0 +1,213 @@
+.auth-container{
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: $color-dark-1;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.75) 100%), url("../assets/decorations/dectoration-squares.svg"), url("../assets/decorations/dectoration-squares-upsidedown.svg");
+  background-repeat: no-repeat;
+  background-position: top, bottom left, top right;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  user-select: none;
+}
+
+@media only screen and(max-width: 1400px){
+  .auth-container{
+    background-size: 100%, 80%, 80%;
+  }
+}
+
+.auth{
+  background-color: $color-white;
+  padding: 2rem 0;
+  border-radius: 15px;
+  text-align: center;
+  width: 24rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: $shadow-1;
+  margin: 1rem 0;
+
+  &-logo{
+    width: 7rem;
+  }
+
+  &-icon{
+    color: $color-red;
+    width: 4rem;
+  }
+
+  &-title{
+    color: $color-dark-1;
+    font-size: 1.7rem;
+  }
+
+  &-error{
+    background-color: $color-dark-3;
+    width: 100%;
+    padding: 0.5rem 0;
+    border-radius: 10px;
+    box-shadow: $shadow-1;
+    border: solid $color-red 2px;
+    margin-bottom: 1rem;
+  }
+
+  &-error-message{
+    color: $color-white;
+    font-weight: normal;
+    font-size: 1.1rem;
+  }
+
+  &-paragraph{
+    font-size: 1.3rem;
+  }
+  
+  &-link-container {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.4rem 0 1rem;
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+  }
+
+  &-link {
+    text-decoration: underline;
+    cursor: pointer;
+    opacity: 0.9;
+    transition: 0.1s;
+  }
+
+  &-input-wrapper{
+    width: 100%;
+    max-width: 16rem;
+  }
+
+  &-input-name{
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: bolder;
+  }
+
+  &-input-separator{
+text-decoration: none;
+color: $color-red;
+font-weight: bolder;
+  }
+
+  &-input-container{
+    background-color: $color-dark-3;
+    display: flex;
+    max-width: 22rem;
+    width: 100%;
+    padding: 0.4rem 0;
+    border-radius: 5px;
+    opacity: 0.95;
+    transition: 0.1s;
+    box-shadow: rgba(0, 0, 0, 0) 0 0 0;
+    margin-bottom: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-input-container:hover, &-input-container:focus, &-input-container.active{
+    opacity: 1;
+    box-shadow: $shadow-1;
+  }
+
+  &-input-icon, &-submit-icon, &-input-icon-smaller{
+    width: 1.8rem;
+    color: $color-red;
+    padding: 0 0.3rem;
+    transition: 0.3s;
+  }
+
+  &-input-icon-smaller{
+    width: 1.5rem;
+    padding: 0 0.4rem;
+  }
+
+  &-input{
+    border: none;
+    background: none;
+    color: $color-white;
+    width: 100%;
+    font-weight: bold;
+  }
+
+  &-input-select{
+    border: none;
+    background: none;
+    color: $color-white;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    outline: none;
+  }
+
+  &-input-select-option{
+    background-color: $color-dark-3;
+    //border: none;
+    //padding: 0.3rem 0;
+  }
+
+  &-input-file{
+    display: none;
+  }
+
+  &-input-textarea{
+    min-width: 100%;
+    min-height: 5rem;
+  }
+
+  &-input-file-custom{
+    text-align: left;
+    cursor: pointer;
+    font-weight: lighter;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+  }
+
+  &-submit-button{
+    margin-top: 1rem;
+    border: none;
+    cursor: pointer;
+    background-color: $color-dark-3;
+    color: $color-red;
+    padding: 1rem 0;
+    width: 100%;
+    //border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: $color-red 4px 4px 0, $color-red -4px -4px 0;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover{
+      background-color: $color-red;
+      color: $color-white;
+      box-shadow: 0 0 0, 0 0 0;
+    }
+
+    &:hover > .auth-submit-icon{
+      color: white;
+    }
+  }
+  
+}
+
+@media only screen and (max-width: 600px){
+  .auth{
+    width: 22rem;
+  }
+}

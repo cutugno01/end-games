@@ -1,0 +1,26 @@
+.footer{
+  background-color: $color-dark-3;
+  padding: 2rem 0;
+
+  &-title{
+    color: $color-grey;
+    margin: 0 0 0.5rem;
+  }
+
+  &-link{
+    color: $color-white;
+    transition: 0.1s;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover, &:hover > u, &:hover > i{
+      color: $color-red
+    }
+
+    u, i{
+      text-decoration: none;
+      color: $color-grey;
+      transition: 0.1s;
+    }
+  }
+}

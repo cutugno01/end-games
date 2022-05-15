@@ -1,0 +1,120 @@
+//*| Font
+//@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+
+//*| Variables
+@import "./variables.scss";
+
+//*| Styles imports
+@import "./auth.scss";
+@import "./signin.scss";
+@import "./signup.scss";
+@import "./navbar.scss";
+@import "./store-layout.scss";
+@import "./footer.scss";
+@import "./modal-overlay.scss";
+@import './modals.scss';
+@import './search.scss';
+@import './store-header.scss';
+@import './product.scss';
+@import './homepage.scss';
+@import './product-page.scss';
+@import './profile.scss';
+@import './loading-overlay.scss';
+
+//@import-normalize;
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+a {
+  margin: 0;
+  padding: 0;
+  color: $color-dark-1;
+}
+
+a{
+  text-decoration: none;
+}
+
+input, button, textarea{
+  outline: none;
+}
+
+html {
+  //font-family: 'Mukta', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+body{
+  background-color: $color-dark-1;
+  background-repeat: no-repeat;
+  color: $color-white;
+  user-select: none;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+input[type=number] {
+  -moz-appearance: textfield !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+  ::-webkit-scrollbar-track {
+  background: $color-dark-1; 
+}
+  ::-webkit-scrollbar-thumb {
+    background: #3c3e46; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2d2f38;
+} 
+
+.relative{
+  position: relative;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.flex-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-center-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.second-font{
+  font-family: 'Righteous', cursive;
+  font-weight: lighter;
+}
+
+// .text-white{
+//   color: $color-white;
+// }
+
+// .text-center{
+//   text-align: center;
+// }

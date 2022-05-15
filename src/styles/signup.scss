@@ -1,0 +1,19 @@
+.signup{
+  &-regex-container{
+    margin-top: -1rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  &-regex{
+    color: $color-red;
+    transition: 0.1s;
+  }
+
+  &-regex.active{
+    color: $color-dark-1;
+  }
+}

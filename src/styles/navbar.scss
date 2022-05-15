@@ -1,0 +1,90 @@
+.nav{
+  width: 100%;
+  min-height: 4.5rem;
+  display: flex;
+  background-color: $color-dark-1;
+  border-bottom: 2px solid $color-red;
+  justify-content: space-between;
+
+  &-logo-container{
+    width: 100%;
+  }
+
+  &-logo{
+    width: 4.5rem;
+  }
+
+  &-links{
+    display: flex;
+  }
+
+  &-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
+    background-color: $color-dark-3;
+    color: $color-white;
+    cursor: pointer;
+    transition: 0.1s;
+    opacity: 0.8;
+
+    &:hover{
+      background-color: $color-red;
+    }
+  }
+
+  &-link-icon{
+    width: 2rem;
+  }
+
+  &-link.active, &-search-icon-container.active{
+    background-color: $color-red;
+    opacity: 1;
+    color: $color-white;
+  }
+
+  &-search-icon-container{
+    color: $color-red;
+    transition: 0.1s;
+    cursor: pointer;
+
+    &:hover{
+      color: $color-white;
+    }
+  }
+
+  &-search-icon{
+    width: 2rem;
+    padding: 0 1rem;
+  }
+
+  &-account-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &-account-link{
+    margin-right: 1rem;
+    color: $color-white;
+    transition: 0.1s;
+    overflow: hidden;
+    max-width: 6rem;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover{
+      color: $color-red;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px){
+  .nav{
+    &-logo-container{
+      display: none;
+    }
+  }
+}

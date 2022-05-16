@@ -22,20 +22,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    padding: 0 2rem;
     background-color: $color-dark-3;
     color: $color-white;
     cursor: pointer;
     transition: 0.1s;
     opacity: 0.8;
+    position: relative;
 
     &:hover{
       background-color: $color-red;
+
+      .nav-link-name{
+        opacity: 1;
+        bottom: 0.3rem;
+        
+      }
+
+      .nav-link-icon{
+        margin-top: -1rem;
+      }
     }
+  }
+
+  &-link-name{
+    color: $color-white;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+    font-size: 1.2rem;
+    transition: 0.2s $cubic-bezier-1;
   }
 
   &-link-icon{
     width: 2rem;
+    transition: 0.15s $cubic-bezier-1;
   }
 
   &-link.active, &-search-icon-container.active{

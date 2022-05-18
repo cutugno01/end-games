@@ -1,9 +1,9 @@
 .nav{
   width: 100%;
-  min-height: 4.5rem;
+  height: 3rem;
   display: flex;
   background-color: $color-dark-1;
-  border-bottom: 2px solid $color-red;
+  border-top: 2px solid $color-red;
   justify-content: space-between;
 
   &-logo-container{
@@ -11,73 +11,83 @@
   }
 
   &-logo{
-    width: 4.5rem;
+    width: 3rem;
+  }
+
+  &-links-container{
+  }
+
+  &-links-container-decorations{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  &-links-container-decoration{
+    height: 3.1rem;
+    position: absolute;
+    top: -0.1rem;
+  }
+
+  &-links-container-decoration.right{
+    left: 100%;
+  }
+
+  &-links-container-decoration.left{
+    right: 100%;
   }
 
   &-links{
     display: flex;
+    gap: 2rem;
+    background-color: $color-red;
+    height: 100%;
   }
 
   &-link{
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 2rem;
-    background-color: $color-dark-3;
-    color: $color-white;
     cursor: pointer;
-    transition: 0.1s;
-    opacity: 0.8;
-    position: relative;
-
-    &:hover{
-      background-color: $color-red;
-
-      .nav-link-name{
-        opacity: 1;
-        bottom: 0.3rem;
-        
-      }
-
-      .nav-link-icon{
-        margin-top: -1rem;
-      }
-    }
   }
 
-  &-link-name{
-    color: $color-white;
+  &-link-decoration{
     position: absolute;
-    bottom: 0;
-    opacity: 0;
-    font-size: 1.2rem;
-    transition: 0.2s $cubic-bezier-1;
+    width: 1rem;
+    top: -0.25rem;
+    color: $color-dark-1;
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0.4));
+    transition: 0.15s ease-in-out;
   }
 
   &-link-icon{
     width: 2rem;
     transition: 0.15s $cubic-bezier-1;
+    color: $color-dark-1;
   }
 
-  &-link.active, &-search-icon-container.active{
-    background-color: $color-red;
-    opacity: 1;
+  &-link.active > &-link-icon, &-link:hover > &-link-icon{
     color: $color-white;
   }
 
-  &-search-icon-container{
-    color: $color-red;
-    transition: 0.1s;
-    cursor: pointer;
-
-    &:hover{
-      color: $color-white;
-    }
+  &-link:hover > &-link-decoration, &-link.active > &-link-decoration {
+    top: -0.15rem;
   }
 
-  &-search-icon{
+  &-link.active > &-link-decoration{
+    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+    color: $color-white;
+  }
+
+  &-link-account-icon{
+    color: $color-white;
+    transition: 0.15s;
     width: 2rem;
-    padding: 0 1rem;
+
+    &:hover{
+      color: $color-red;
+    }
   }
 
   &-account-container{
@@ -106,6 +116,10 @@
   .nav{
     &-logo-container{
       display: none;
+    }
+
+    &-link:first-child{
+      padding: 0 0 0 1rem;
     }
   }
 }

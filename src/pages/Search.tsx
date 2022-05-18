@@ -1,5 +1,4 @@
 //*| Components
-//import StoreLayout from "../layout/StoreLayout";
 
 const Search = () => {
   return (

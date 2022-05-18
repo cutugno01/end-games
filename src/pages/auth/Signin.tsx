@@ -1,7 +1,7 @@
 //*| Hooks and Libraries
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 //*| Components
 import Logo from "../../assets/logo.svg";

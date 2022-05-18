@@ -7,7 +7,7 @@ const Product = ({
   image,
 }: {
   name: string;
-  price: number;
+  price?: number;
   slug: string;
   image: string;
 }) => {
@@ -18,7 +18,7 @@ const Product = ({
       <div className="product-info">
         <h2
           className={`product-info-price second-font ${
-            price.toString().includes(".") ? "" : "bigger"
+            price?.toString().includes(".") ? "" : "bigger"
           }`}
         >
           {price}

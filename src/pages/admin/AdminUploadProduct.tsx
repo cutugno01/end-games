@@ -59,7 +59,6 @@ const AdminUploadProduct = () => {
 
   useEffect(() => {
     axios.get("/category/list").then((res) => {
-      console.log(res);
       if (res.data.response.code !== 202) {
         return;
       }
@@ -88,7 +87,7 @@ const AdminUploadProduct = () => {
     };
   };
 
-  const handleUploadRequest = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleUploadRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     if (state.price < 1) {
@@ -111,41 +110,16 @@ const AdminUploadProduct = () => {
         },
       ],
     };
-    axios
+    await axios
       .post("/product/create", data, config)
-      .then((res) => {
-        //console.log(res);
+      .then(() => {
         setIsModalOpen(true);
       })
-      .catch((res) => {
-        //console.log(res);
+      .catch(() => {
         setShowError(true);
       });
     setIsLoading(false);
   };
-
-  // const test = () => {
-  //   const auth_token = localStorage.getItem("auth_token");
-  //   const config = {
-  //     headers: { Authorization: `Bearer ${auth_token}` },
-  //   };
-  //   const data = {
-  //     name: "teeestte",
-  //     description: "teteeet",
-  //     category: 1,
-  //     price: 22,
-  //   };
-  //   axios
-  //     .post("/product/create", data, config)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setIsModalOpen(true);
-  //     })
-  //     .catch((res) => {
-  //       console.log(res);
-  //       setShowError(true);
-  //     });
-  // };
 
   return (
     <div className="auth-container">
@@ -157,6 +131,14 @@ const AdminUploadProduct = () => {
         <h2 className="auth-title">Upload product</h2>
         <div className="auth-link-container">
           <h3 className="auth-link" onClick={() => navigate("/")}>
+            <svg
+              className="auth-link-icon"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z" />
+            </svg>
             Go back
           </h3>
         </div>

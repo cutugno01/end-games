@@ -82,6 +82,20 @@
     cursor: pointer;
     opacity: 0.9;
     transition: 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.75;
+    transition: 0.1s;
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
+  &-link-icon{
+    width: 1.4rem;
+    color: $color-red;
   }
 
   &-input-wrapper{

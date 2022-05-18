@@ -15,6 +15,7 @@ const ProductPage = () => {
     name: string;
     price: number;
     description: string;
+    category: string;
     id: number;
     image: {
       name: string;
@@ -29,11 +30,12 @@ const ProductPage = () => {
         slug: productSlug,
       })
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         setProduct({
           id: res.data.data.product_info.id,
           name: res.data.data.product_info.name,
           price: res.data.data.product_info.price,
+          category: res.data.data.product_info.category_name,
           description: res.data.data.product_info.description,
           image: {
             name: res.data.data.product_images[0].name,
@@ -50,7 +52,7 @@ const ProductPage = () => {
       <div className="product-page-img-container">
         <img
           className="product-page-img"
-          src={`/storage/uploads/images/products/${product?.image.name}.${product?.image.type}`}
+          src={`https://storage.end-games.nexthub.io/uploads/images/products/${product?.image.name}.${product?.image.type}`}
           alt=""
         />
         <div className="product-page-description-container">
@@ -66,7 +68,9 @@ const ProductPage = () => {
         </div>
       </div>
       <div className="product-page-categories">
-        <h4 className="product-page-category second-font">Action</h4>
+        <h4 className="product-page-category second-font">
+          {product?.category}
+        </h4>
       </div>
       <h2 className="product-page-price second-font">
         <svg

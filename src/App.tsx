@@ -19,6 +19,7 @@ import AdminUploadProduct from "./pages/admin/AdminUploadProduct";
 import NotFoundPage from "./pages/NotFoundPage";
 import StoreLayout from "./layout/StoreLayout";
 import Profile from "./pages/Profile";
+import CategoryPage from "./pages/CategoryPage";
 
 function App() {
   //Auth: -1 = not authenticated; 0 = authenticated as user; 1 = authenticated as admin
@@ -84,6 +85,10 @@ function App() {
         <Route
           path="product/:productSlug"
           element={<StoreLayout user={user} children={<ProductPage />} />}
+        />
+        <Route
+          path="category/:categoryId"
+          element={<StoreLayout user={user} children={<CategoryPage />} />}
         />
         {user.role !== -1 && (
           <Route path="profile" element={<Profile user={user} />} />

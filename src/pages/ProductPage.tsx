@@ -1,8 +1,7 @@
 //*| Hooks and Libraries
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 //*| Components
 //import StoreLayout from "../layout/StoreLayout";

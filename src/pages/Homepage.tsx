@@ -72,13 +72,8 @@ const Homepage = () => {
   }, []);
 
   return (
-    <div>
-      <header
-        className="store-header"
-        // onClick={() => {
-        //   console.log(products, categories);
-        // }}
-      >
+    <div className="homepage">
+      <header className="store-header">
         {heroProduct && (
           <img
             className="store-header-img"
@@ -111,17 +106,20 @@ const Homepage = () => {
       </header>
       <h2 className="store-section-title">New Releases</h2>
       <div className="products-container">
-        {products?.slice(0, 8).map((product) => {
-          return (
-            <Product
-              key={product.slug}
-              name={product.name}
-              price={product.price}
-              slug={product.slug}
-              image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
-            />
-          );
-        })}
+        {products
+          ?.slice(products.length - 8, products.length)
+          .reverse()
+          .map((product) => {
+            return (
+              <Product
+                key={product.slug}
+                name={product.name}
+                price={product.price}
+                slug={product.slug}
+                image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+              />
+            );
+          })}
       </div>
 
       {categories?.map((category) => {
@@ -130,7 +128,17 @@ const Homepage = () => {
             return category.ID?.toString() === product.category;
           }) && (
             <div key={category.ID}>
-              <h2 className="store-section-title">{category.name}</h2>
+              <div
+                className="store-category"
+                onClick={() => {
+                  navigate(`/category/${category.ID}`);
+                }}
+              >
+                <h2 className="store-section-title">
+                  {category.name}
+                  <u>see all</u>
+                </h2>
+              </div>
               <div className="products-container">
                 {products
                   ?.filter((product) => {

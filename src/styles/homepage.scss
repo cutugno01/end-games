@@ -1,3 +1,33 @@
 .homepage{
-  
+  .store-category{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    
+    background-color: $color-dark-2;
+    .store-section-title{
+      position: relative;
+      u{
+        opacity: 0;
+        transition: 0.3s $cubic-bezier-1;
+        position: absolute;
+        left: 80%;
+        font-size: 1.4rem;
+        color: $color-red;
+        width: 5rem;
+        font-weight: lighter;
+        margin-bottom: -2rem;
+      }
+    }
+   
+  }
+  .store-category:hover{
+    u{
+      opacity: 1;
+      left: calc(100% + 0.5rem);
+      color: $color-white;
+    }
+  }
 }

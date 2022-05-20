@@ -7,7 +7,7 @@ const Product = ({
   image,
 }: {
   name: string;
-  price?: number;
+  price: number;
   slug: string;
   image: string;
 }) => {

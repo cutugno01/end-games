@@ -2,26 +2,29 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
+import axios from "axios";
 
 //*| Components
 import ModalOne from "../../components/modals/ModalOne";
 import CheckIcon from "../../assets/icons/check.svg";
 
 const ForgotPassword = () => {
-  // useEffect(() => {
-  //   if (auth !== 0) {
-  //     navigate("/");
-  //   }
-  // }, []);
-
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [doesPasswordMatch, setDoesPasswordMatch] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  // Regex
+  const uppercaseRegExp = /(?=.*?[A-Z])/;
+  const lowercaseRegExp = /(?=.*?[a-z])/;
+  const digitsRegExp = /(?=.*?[0-9])/;
+  const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
   interface IState {
     step: number;
     email: string;
-    token: string;
+    client_code: string;
+    email_code: string;
     password: string;
     confirmPassword: string;
   }
@@ -29,7 +32,8 @@ const ForgotPassword = () => {
   const [state, setState] = useState<IState>({
     step: 0,
     email: "",
-    token: "",
+    client_code: "",
+    email_code: "",
     password: "",
     confirmPassword: "",
   });
@@ -55,18 +59,40 @@ const ForgotPassword = () => {
     state.password === "" && setDoesPasswordMatch(false);
   }, [state.confirmPassword, state.password]);
 
-  const handleRequestToken = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRequestCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO: make request to server
-
-    //Upon request success
+    const res = await axios.post("/user/reset", { email_usr: state.email });
+    const client_code = res.data.data.cc;
+    if (res.status !== 202) {
+      setShowError(true);
+      return;
+    }
+    setShowError(false);
+    handleSetStateValue("client_code", client_code);
     nextStep();
   };
 
-  const handleRequestReset = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRequestReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO: make request to server
-    //Upon request success
+    if (
+      state.password.length < 8 ||
+      !uppercaseRegExp.test(state.password) ||
+      !lowercaseRegExp.test(state.password) ||
+      !digitsRegExp.test(state.password) ||
+      !specialCharRegExp.test(state.password) ||
+      !doesPasswordMatch
+    ) {
+      return;
+    }
+    const res = await axios.post("/user/reset/confirm", {
+      client_code: state.client_code,
+      email_code: state.email_code,
+      password: state.password,
+    });
+    if (res.status !== 202) {
+      setShowError(true);
+      return;
+    }
     setIsModalOpen(true);
   };
 
@@ -83,7 +109,7 @@ const ForgotPassword = () => {
               <form
                 className="auth"
                 onSubmit={(e) => {
-                  handleRequestToken(e);
+                  handleRequestCode(e);
                 }}
               >
                 <h2 className="auth-title">Reset password</h2>
@@ -101,6 +127,25 @@ const ForgotPassword = () => {
                   </h3>
                 </div>
                 <div className="auth-input-wrapper">
+                  {showError && (
+                    <div className="auth-error">
+                      <svg
+                        className="auth-input-icon"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <h3 className="auth-error-message">
+                        An error occurred. Try again.
+                      </h3>
+                    </div>
+                  )}
                   <h2 className="auth-input-name">Email</h2>
                   <div
                     className={`auth-input-container ${
@@ -156,10 +201,10 @@ const ForgotPassword = () => {
                   </h3>
                 </div>
                 <div className="auth-input-wrapper">
-                  <h2 className="auth-input-name">Token</h2>
+                  <h2 className="auth-input-name">Code</h2>
                   <div
                     className={`auth-input-container ${
-                      state.token !== "" ? "active" : ""
+                      state.email_code !== "" ? "active" : ""
                     }`}
                   >
                     <svg
@@ -178,13 +223,20 @@ const ForgotPassword = () => {
                       className="auth-input"
                       type="text"
                       required
-                      value={state.token}
+                      value={state.email_code}
                       onChange={(e) => {
-                        handleSetStateValue("token", e.target.value);
+                        handleSetStateValue("email_code", e.target.value);
                       }}
                     />
                   </div>
-                  <h2 className="auth-input-name">New password</h2>
+                  <h2
+                    className="auth-input-name"
+                    onClick={() => {
+                      console.log(state);
+                    }}
+                  >
+                    New password
+                  </h2>
                   <div
                     className={`auth-input-container ${
                       state.password !== "" ? "active" : ""
@@ -246,6 +298,43 @@ const ForgotPassword = () => {
                         <path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" />
                       </svg>
                     )}
+                  </div>
+                  <div className="signup-regex-container">
+                    <p
+                      className={`signup-regex ${
+                        state.password.length >= 8 ? "active" : ""
+                      }`}
+                    >
+                      8 characters
+                    </p>
+                    <p
+                      className={`signup-regex ${
+                        uppercaseRegExp.test(state.password) ? "active" : ""
+                      }`}
+                    >
+                      Uppercase letter
+                    </p>
+                    <p
+                      className={`signup-regex ${
+                        lowercaseRegExp.test(state.password) ? "active" : ""
+                      }`}
+                    >
+                      Lowercase letter
+                    </p>
+                    <p
+                      className={`signup-regex ${
+                        digitsRegExp.test(state.password) ? "active" : ""
+                      }`}
+                    >
+                      Number
+                    </p>
+                    <p
+                      className={`signup-regex ${
+                        specialCharRegExp.test(state.password) ? "active" : ""
+                      }`}
+                    >
+                      Special character
+                    </p>
                   </div>
                   <h2 className="auth-input-name">Confirm password</h2>
                   <div

@@ -1,12 +1,9 @@
-//*| Components
+//*| Hooks and Libraries
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Product from "../components/Product";
 
-// /product/search
-// post
-// name
-// ritorna una lista
+//*| Components
+import Product from "../components/Product";
 
 const Search = () => {
   interface IProduct {

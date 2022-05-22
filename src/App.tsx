@@ -20,6 +20,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import StoreLayout from "./layout/StoreLayout";
 import Profile from "./pages/Profile";
 import CategoryPage from "./pages/CategoryPage";
+import UserGames from "./pages/UserGames";
 
 function App() {
   //Auth: -1 = not authenticated; 0 = authenticated as user; 1 = authenticated as admin
@@ -37,11 +38,6 @@ function App() {
     role: -1,
   });
 
-  // const [token, setToken] = useState<string | null>();
-  // window.addEventListener("storage", () =>
-  //   setToken(localStorage.getItem("auth_token"))
-  // );
-
   useEffect(() => {
     const auth_token = localStorage.getItem("auth_token");
     if (!auth_token) {
@@ -51,7 +47,6 @@ function App() {
       headers: { Authorization: `Bearer ${auth_token}` },
     };
     axios.get("/user/fetch", config).then((res) => {
-      //console.log(res);
       if (res.data.response.code !== 202) {
         return;
       }
@@ -60,11 +55,7 @@ function App() {
         email: res.data.data.user_data.email,
         role: parseInt(res.data.data.user_data.role),
       });
-      //console.log(user);
     });
-    // .catch((res) => {
-    //   console.log(res);
-    // });
   }, []);
 
   return (
@@ -91,7 +82,13 @@ function App() {
           element={<StoreLayout user={user} children={<CategoryPage />} />}
         />
         {user.role !== -1 && (
-          <Route path="profile" element={<Profile user={user} />} />
+          <>
+            <Route path="profile" element={<Profile user={user} />} />
+            <Route
+              path="user-games"
+              element={<StoreLayout user={user} children={<UserGames />} />}
+            />
+          </>
         )}
         {user.role === -1 && (
           <>

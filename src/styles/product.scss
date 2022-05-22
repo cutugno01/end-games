@@ -102,3 +102,9 @@
     height: 120%;
   }
 }
+
+@media only screen and (max-width: 450px){
+  .product{
+    width: 20rem;
+  }
+}

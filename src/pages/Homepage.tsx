@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 //*| Components
 import Product from "../components/Product";
@@ -45,7 +47,6 @@ const Homepage = () => {
   useEffect(() => {
     const handleRequest = async () => {
       const productsResponse = await axios.get("/product/list");
-      //console.log(productsResponse);
       setProducts(productsResponse.data.data.products);
       const heroIndex = Math.floor(
         Math.random() * productsResponse.data.data.products.length
@@ -66,102 +67,114 @@ const Homepage = () => {
         },
       });
       const categoriesResponse = await axios.get("/category/list");
-      setCategories(categoriesResponse.data.data.categories.slice(0, 4));
+      setCategories(categoriesResponse.data.data.categories.slice(0, 5));
     };
     handleRequest();
   }, []);
 
   return (
-    <div className="homepage">
-      <header className="store-header">
-        {heroProduct && (
-          <img
-            className="store-header-img"
-            src={`https://storage.end-games.nexthub.io/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
-            alt="img"
-          />
-        )}
-        <div className="store-header-description-container">
-          <div className="store-header-description-wrapper">
-            <h2
-              className="store-header-product-name"
-              onClick={() =>
-                navigate(
-                  `/product/${products![heroIndex ? heroIndex : 0].slug}`
-                )
-              }
-            >
-              {heroProduct?.name}
-            </h2>
-            <div>
-              <h4 className="product-page-category second-font">
-                {heroProduct?.category}
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        className="homepage"
+      >
+        <header className="store-header">
+          {heroProduct && (
+            <motion.img
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className="store-header-img"
+              src={`https://storage.end-games.nexthub.io/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
+              alt="img"
+            />
+          )}
+          <div className="store-header-description-container">
+            <div className="store-header-description-wrapper">
+              <h2
+                className="store-header-product-name"
+                onClick={() =>
+                  navigate(
+                    `/product/${products![heroIndex ? heroIndex : 0].slug}`
+                  )
+                }
+              >
+                {heroProduct?.name}
+              </h2>
+              <div>
+                <h4 className="product-page-category second-font">
+                  {heroProduct?.category}
+                </h4>
+              </div>
+              <h4 className="store-header-product-description">
+                {heroProduct?.description}
               </h4>
             </div>
-            <h4 className="store-header-product-description">
-              {heroProduct?.description}
-            </h4>
           </div>
+        </header>
+        <h2 className="store-section-title">New Releases</h2>
+        <div className="products-container">
+          {products
+            ?.slice(products.length - 8, products.length)
+            .reverse()
+            .map((product) => {
+              return (
+                <Product
+                  key={product.slug}
+                  name={product.name}
+                  price={product.price}
+                  slug={product.slug}
+                  image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+                />
+              );
+            })}
         </div>
-      </header>
-      <h2 className="store-section-title">New Releases</h2>
-      <div className="products-container">
-        {products
-          ?.slice(products.length - 8, products.length)
-          .reverse()
-          .map((product) => {
-            return (
-              <Product
-                key={product.slug}
-                name={product.name}
-                price={product.price}
-                slug={product.slug}
-                image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
-              />
-            );
-          })}
-      </div>
 
-      {categories?.map((category) => {
-        return (
-          products?.some((product) => {
-            return category.ID?.toString() === product.category;
-          }) && (
-            <div key={category.ID}>
-              <div
-                className="store-category"
-                onClick={() => {
-                  navigate(`/category/${category.ID}`);
-                }}
-              >
-                <h2 className="store-section-title">
-                  {category.name}
-                  <u>see all</u>
-                </h2>
+        {categories?.map((category) => {
+          return (
+            products?.some((product) => {
+              return category.ID?.toString() === product.category;
+            }) && (
+              <div key={category.ID}>
+                <div
+                  className="store-category"
+                  onClick={() => {
+                    navigate(`/category/${category.ID}`);
+                  }}
+                >
+                  <h2 className="store-section-title">
+                    {category.name}
+                    <u>see all</u>
+                  </h2>
+                </div>
+                <div className="products-container">
+                  {products
+                    ?.filter((product) => {
+                      return product.category === category.ID?.toString();
+                    })
+                    .slice(0, 4)
+                    .map((product) => {
+                      return (
+                        <Product
+                          key={product.slug + "1"}
+                          name={product.name}
+                          price={product.price}
+                          slug={product.slug}
+                          image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+                        />
+                      );
+                    })}
+                </div>
               </div>
-              <div className="products-container">
-                {products
-                  ?.filter((product) => {
-                    return product.category === category.ID?.toString();
-                  })
-                  .slice(0, 4)
-                  .map((product) => {
-                    return (
-                      <Product
-                        key={product.slug + "1"}
-                        name={product.name}
-                        price={product.price}
-                        slug={product.slug}
-                        image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
-                      />
-                    );
-                  })}
-              </div>
-            </div>
-          )
-        );
-      })}
-    </div>
+            )
+          );
+        })}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

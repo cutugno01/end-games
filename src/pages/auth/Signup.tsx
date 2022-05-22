@@ -7,6 +7,7 @@ import { AnimatePresence } from "framer-motion";
 //*| Components
 import ModalOne from "../../components/modals/ModalOne";
 import CheckIcon from "../../assets/icons/check.svg";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const Signup = () => {
   // Regex
@@ -21,6 +22,7 @@ const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -54,8 +56,9 @@ const Signup = () => {
     state.password === "" && setDoesPasswordMatch(false);
   }, [state.confirmPassword, state.password]);
 
-  const handleSignupRequest = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignupRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     if (
       state.username.length < 3 ||
       state.password.length < 8 ||
@@ -67,7 +70,7 @@ const Signup = () => {
     ) {
       return;
     }
-    axios
+    await axios
       .post("/user/signup", {
         email: state.email,
         username: state.username,
@@ -79,10 +82,12 @@ const Signup = () => {
       .catch(() => {
         setShowError(true);
       });
+    setIsLoading(false);
   };
 
   return (
     <div className="auth-container">
+      {isLoading && <LoadingOverlay />}
       <form className="auth signup" onSubmit={(e) => handleSignupRequest(e)}>
         <h2 className="auth-title">Register a new account</h2>
         <div className="auth-link-container">

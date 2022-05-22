@@ -5,11 +5,13 @@ import { useState } from "react";
 
 //*| Components
 import Logo from "../../assets/logo.svg";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 const Signin = () => {
   const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   interface IState {
     email_usr: string;
@@ -28,9 +30,10 @@ const Signin = () => {
     }));
   };
 
-  const handleLoginRequest = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    axios
+    setIsLoading(true);
+    await axios
       .post("/user/login", {
         email_usr: state.email_usr,
         password: state.password,
@@ -44,10 +47,12 @@ const Signin = () => {
       .catch(() => {
         setShowError(true);
       });
+    setIsLoading(false);
   };
 
   return (
     <div className="auth-container">
+      {isLoading && <LoadingOverlay />}
       <form className="auth login" onSubmit={(e) => handleLoginRequest(e)}>
         <img className="auth-logo" src={Logo} alt="" />
         <div className="auth-link-container">

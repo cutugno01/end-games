@@ -1,9 +1,12 @@
 //*| Hooks and Libraries
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { AnimatePresence } from "framer-motion";
 //import { useState } from "react";
 
 //*| Components
 import Logo from "../assets/logo.svg";
+import Dropdown from "./Dropdown";
 
 const Navbar = ({
   user,
@@ -13,6 +16,42 @@ const Navbar = ({
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const path = pathname.split("/");
+
+  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+
+  const links = [
+    {
+      link: "/profile",
+      icon: (
+        <svg
+          className="w-6 h-6"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+            clipRule="evenodd"
+          />
+        </svg>
+      ),
+    },
+    {
+      link: "/user-games",
+      icon: (
+        <svg
+          version="1.0"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 217 220"
+          fill="currentColor"
+        >
+          <path d="M33 16.3c-5.2 2.6-6.2 10.4-1.8 14.3 1.9 1.8 5.6 1.9 78.7 2.2 42.1.1 77.6 0 78.9-.3 5.1-1.2 7.7-7.4 5.6-13-1.8-4.5-1.7-4.5-82.6-4.5-59.5 0-76.9.3-78.8 1.3zM27 46.3c-5.2 2.6-6.2 10.4-1.8 14.3 1.9 1.8 5.8 1.9 84.7 2.2 45.4.1 83.6 0 84.9-.3 5.1-1.2 7.7-7.4 5.6-13-1.8-4.5-1.3-4.5-88.6-4.5-64.3 0-82.8.3-84.8 1.3zM28.3 76.1c-1.8.5-4.8 2.5-6.8 4.4-6.4 6.5-6.4 5.3.8 62.8 6.1 49.1 6.6 52 9.1 55.8 1.7 2.5 4.4 4.8 6.9 6 4 1.8 7.6 1.9 72.7 1.9 41.8 0 69.8-.4 71.9-1 3.9-1.1 8.6-5.2 10.8-9.3 1.5-2.9 13.2-92.4 13.5-102.7.1-8.5-4.9-15.9-12.3-18-4.4-1.3-162.2-1.2-166.6.1zM135.9 96c19.4 5.5 34.1 16.6 41 31 3.4 7 3.6 8.1 3.6 17s-.2 10-3.6 17c-11.9 24.8-47.2 38.9-81.9 32.6-33.4-6.1-55.7-29.9-51.8-55.3 3.2-21.1 23.5-38.5 51.3-43.9 10.2-2 31.8-1.2 41.4 1.6z" />
+          <path d="M107.3 138.7c-2.8.5-7.3 5.8-7.3 8.4 0 1 1.3 3.3 2.9 5.1 2.5 2.8 3.4 3.2 8.4 3.2 7.8.1 11.2-2.5 11.2-8.4 0-3.4-.5-4.7-2.6-6.2-2.6-2-8.6-3-12.6-2.1z" />
+        </svg>
+      ),
+    },
+  ];
 
   return (
     <div className="nav">
@@ -119,9 +158,25 @@ const Navbar = ({
             Sign-in
           </h3>
         ) : (
-          <h3 className="nav-account-link" onClick={() => navigate("/profile")}>
-            {user.username}
-          </h3>
+          <div className="relative">
+            <h3
+              className="nav-account-link"
+              onClick={() => setToggleDropdown(!toggleDropdown)}
+            >
+              {user.username}
+            </h3>
+            <AnimatePresence>
+              {toggleDropdown && (
+                <Dropdown
+                  handleClose={() => {
+                    setToggleDropdown(false);
+                  }}
+                  isOpen={toggleDropdown}
+                  links={links}
+                />
+              )}
+            </AnimatePresence>
+          </div>
         )}
         {user.role === 1 && (
           <h3

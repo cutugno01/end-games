@@ -84,16 +84,18 @@ const ForgotPassword = () => {
     ) {
       return;
     }
-    const res = await axios.post("/user/reset/confirm", {
-      client_code: state.client_code,
-      email_code: state.email_code,
-      password: state.password,
-    });
-    if (res.status !== 202) {
-      setShowError(true);
-      return;
-    }
-    setIsModalOpen(true);
+    await axios
+      .post("/user/reset/confirm", {
+        client_code: state.client_code,
+        email_code: state.email_code,
+        password: state.password,
+      })
+      .then(() => {
+        setIsModalOpen(true);
+      })
+      .catch(() => {
+        setShowError(true);
+      });
   };
 
   const handleCloseModal = () => {
@@ -201,6 +203,25 @@ const ForgotPassword = () => {
                   </h3>
                 </div>
                 <div className="auth-input-wrapper">
+                  {showError && (
+                    <div className="auth-error">
+                      <svg
+                        className="auth-input-icon"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <h3 className="auth-error-message">
+                        An error occurred. You may have to repeat the process
+                      </h3>
+                    </div>
+                  )}
                   <h2 className="auth-input-name">Code</h2>
                   <div
                     className={`auth-input-container ${
@@ -229,14 +250,7 @@ const ForgotPassword = () => {
                       }}
                     />
                   </div>
-                  <h2
-                    className="auth-input-name"
-                    onClick={() => {
-                      console.log(state);
-                    }}
-                  >
-                    New password
-                  </h2>
+                  <h2 className="auth-input-name">New password</h2>
                   <div
                     className={`auth-input-container ${
                       state.password !== "" ? "active" : ""

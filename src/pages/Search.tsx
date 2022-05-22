@@ -1,6 +1,8 @@
 //*| Hooks and Libraries
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 //*| Components
 import Product from "../components/Product";
@@ -19,12 +21,16 @@ const Search = () => {
   const [inputString, setInputString] = useState<string>("");
   const [products, setProducts] = useState<IProduct[]>();
   useEffect(() => {
-    if (inputString.length < 3) {
-      return;
-    }
-    axios.post("/product/search", { name: inputString }).then((res) => {
-      setProducts(res.data.data.products);
-    });
+    const delayDebounceFn = setTimeout(() => {
+      if (inputString.length < 3) {
+        setProducts([]);
+        return;
+      }
+      axios.post("/product/search", { name: inputString }).then((res) => {
+        setProducts(res.data.data.products);
+      });
+    }, 500);
+    return () => clearTimeout(delayDebounceFn);
   }, [inputString]);
   return (
     <div className="search">
@@ -72,20 +78,22 @@ const Search = () => {
         />
       </div>
       <div className="products-container">
-        {products
-          ?.slice(products.length - 8, products.length)
-          .reverse()
-          .map((product) => {
-            return (
-              <Product
-                key={product.slug}
-                name={product.product_name}
-                price={product.product_price}
-                slug={product.slug}
-                image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
-              />
-            );
-          })}
+        <AnimatePresence>
+          {products
+            ?.slice(products.length - 8, products.length)
+            .reverse()
+            .map((product) => {
+              return (
+                <Product
+                  key={product.slug}
+                  name={product.product_name}
+                  price={product.product_price}
+                  slug={product.slug}
+                  image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+                />
+              );
+            })}
+        </AnimatePresence>
       </div>
     </div>
   );

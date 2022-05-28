@@ -12,7 +12,6 @@ import Signin from "./pages/auth/Signin";
 import Signup from "./pages/auth/Signup";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Homepage from "./pages/Homepage";
-//import Contact from "./pages/Contact";
 import Search from "./pages/Search";
 import ProductPage from "./pages/ProductPage";
 import AdminUploadProduct from "./pages/admin/AdminUploadProduct";
@@ -39,23 +38,26 @@ function App() {
   });
 
   useEffect(() => {
-    const auth_token = localStorage.getItem("auth_token");
-    if (!auth_token) {
-      return;
-    }
-    const config = {
-      headers: { Authorization: `Bearer ${auth_token}` },
-    };
-    axios.get("/user/fetch", config).then((res) => {
-      if (res.data.response.code !== 202) {
+    const handleRequest = async () => {
+      const auth_token = localStorage.getItem("auth_token");
+      if (!auth_token) {
         return;
       }
-      setUser({
-        username: res.data.data.user_data.username,
-        email: res.data.data.user_data.email,
-        role: parseInt(res.data.data.user_data.role),
+      const config = {
+        headers: { Authorization: `Bearer ${auth_token}` },
+      };
+      await axios.get("/user/fetch", config).then((res) => {
+        if (res.data.response.code !== 202) {
+          return;
+        }
+        setUser({
+          username: res.data.data.user_data.username,
+          email: res.data.data.user_data.email,
+          role: parseInt(res.data.data.user_data.role),
+        });
       });
-    });
+    };
+    handleRequest();
   }, []);
 
   return (
@@ -65,10 +67,6 @@ function App() {
           path="/"
           element={<StoreLayout user={user} children={<Homepage />} />}
         />
-        {/* <Route
-          path="contact"
-          element={<StoreLayout user={user} children={<Contact />} />}
-        /> */}
         <Route
           path="search"
           element={<StoreLayout user={user} children={<Search />} />}

@@ -31,7 +31,10 @@ const UserGames = () => {
       const config = {
         headers: { Authorization: `Bearer ${auth_token}` },
       };
-      const res = await axios.get("/user/library/list", config);
+      const res = await axios.get(
+        "https://api.end-games.nexthub.io/user/library/list",
+        config
+      );
       setProducts(res.data.data.products);
       setIsLoading(false);
     };

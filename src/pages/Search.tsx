@@ -26,9 +26,13 @@ const Search = () => {
         setProducts([]);
         return;
       }
-      axios.post("/product/search", { name: inputString }).then((res) => {
-        setProducts(res.data.data.products);
-      });
+      axios
+        .post("https://api.end-games.nexthub.io/product/search", {
+          name: inputString,
+        })
+        .then((res) => {
+          setProducts(res.data.data.products);
+        });
     }, 500);
     return () => clearTimeout(delayDebounceFn);
   }, [inputString]);

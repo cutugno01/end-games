@@ -26,7 +26,9 @@ const CategoryPage = () => {
 
   useEffect(() => {
     const handleRequest = async () => {
-      const productsResponse = await axios.get("/product/list");
+      const productsResponse = await axios.get(
+        "https://api.end-games.nexthub.io/product/list"
+      );
       setProducts(
         productsResponse.data.data.products.filter((product: any) => {
           return product.category === categoryId;

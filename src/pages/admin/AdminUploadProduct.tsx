@@ -58,7 +58,7 @@ const AdminUploadProduct = () => {
   const [imgSelectState, setImgSelectState] = useState(false);
 
   useEffect(() => {
-    axios.get("/category/list").then((res) => {
+    axios.get("https://api.end-games.nexthub.io/category/list").then((res) => {
       if (res.data.response.code !== 202) {
         return;
       }
@@ -111,7 +111,7 @@ const AdminUploadProduct = () => {
       ],
     };
     await axios
-      .post("/product/create", data, config)
+      .post("https://api.end-games.nexthub.io/product/create", data, config)
       .then(() => {
         setIsModalOpen(true);
       })

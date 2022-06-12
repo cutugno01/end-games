@@ -46,15 +46,20 @@ const Homepage = () => {
 
   useEffect(() => {
     const handleRequest = async () => {
-      const productsResponse = await axios.get("/product/list");
+      const productsResponse = await axios.get(
+        "https://api.end-games.nexthub.io/product/list"
+      );
       setProducts(productsResponse.data.data.products);
       const heroIndex = Math.floor(
         Math.random() * productsResponse.data.data.products.length
       );
       setHeroIndex(heroIndex);
-      const heroProductResponse = await axios.post("/product/slug", {
-        slug: productsResponse.data.data.products[heroIndex].slug,
-      });
+      const heroProductResponse = await axios.post(
+        "https://api.end-games.nexthub.io/product/slug",
+        {
+          slug: productsResponse.data.data.products[heroIndex].slug,
+        }
+      );
       setHeroProduct({
         id: heroProductResponse.data.data.product_info.id,
         name: heroProductResponse.data.data.product_info.name,
@@ -66,7 +71,9 @@ const Homepage = () => {
           type: heroProductResponse.data.data.product_images[0].type,
         },
       });
-      const categoriesResponse = await axios.get("/category/list");
+      const categoriesResponse = await axios.get(
+        "https://api.end-games.nexthub.io/category/list"
+      );
       setCategories(categoriesResponse.data.data.categories.slice(0, 5));
     };
     handleRequest();

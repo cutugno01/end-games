@@ -61,7 +61,10 @@ const ForgotPassword = () => {
 
   const handleRequestCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await axios.post("/user/reset", { email_usr: state.email });
+    const res = await axios.post(
+      "https://api.end-games.nexthub.io/user/reset",
+      { email_usr: state.email }
+    );
     const client_code = res.data.data.cc;
     if (res.status !== 202) {
       setShowError(true);
@@ -85,7 +88,7 @@ const ForgotPassword = () => {
       return;
     }
     await axios
-      .post("/user/reset/confirm", {
+      .post("https://api.end-games.nexthub.io/user/reset/confirm", {
         client_code: state.client_code,
         email_code: state.email_code,
         password: state.password,

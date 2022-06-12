@@ -24,7 +24,7 @@ import UserGames from "./pages/UserGames";
 function App() {
   //Auth: -1 = not authenticated; 0 = authenticated as user; 1 = authenticated as admin
   // About security concerns: if some user is somehow able to change these params,
-  // they still woldn't be able to access important informations or make requests, since all the requests need a token
+  // they still wouldn't be able to access important informations or make requests, since all the requests need a token
   interface IUser {
     username: string;
     email: string;
@@ -46,16 +46,18 @@ function App() {
       const config = {
         headers: { Authorization: `Bearer ${auth_token}` },
       };
-      await axios.get("/user/fetch", config).then((res) => {
-        if (res.data.response.code !== 202) {
-          return;
-        }
-        setUser({
-          username: res.data.data.user_data.username,
-          email: res.data.data.user_data.email,
-          role: parseInt(res.data.data.user_data.role),
+      await axios
+        .get("https://api.end-games.nexthub.io/user/fetch", config)
+        .then((res) => {
+          if (res.data.response.code !== 202) {
+            return;
+          }
+          setUser({
+            username: res.data.data.user_data.username,
+            email: res.data.data.user_data.email,
+            role: parseInt(res.data.data.user_data.role),
+          });
         });
-      });
     };
     handleRequest();
   }, []);
@@ -73,7 +75,12 @@ function App() {
         />
         <Route
           path="product/:productSlug"
-          element={<StoreLayout user={user} children={<ProductPage />} />}
+          element={
+            <StoreLayout
+              user={user}
+              children={<ProductPage userRole={user.role} />}
+            />
+          }
         />
         <Route
           path="category/:categoryId"

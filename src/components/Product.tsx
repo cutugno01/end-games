@@ -20,7 +20,9 @@ const Product = ({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
       className="product"
-      onClick={() => navigate(`/product/${slug}`)}
+      onClick={() => {
+        slug && navigate(`/product/${slug}`);
+      }}
     >
       <img className="product-img" src={image} alt="img" />
       <div className="product-info">

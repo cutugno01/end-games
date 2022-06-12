@@ -9,7 +9,7 @@ import LoadingOverlay from "../components/LoadingOverlay";
 import ModalOne from "../components/modals/ModalOne";
 import CheckIcon from "../assets/icons/check.svg";
 
-const ProductPage = () => {
+const ProductPage = ({ userRole }: { userRole: number }) => {
   const navigate = useNavigate();
   const { productSlug } = useParams();
 
@@ -34,7 +34,7 @@ const ProductPage = () => {
     const handleRequest = async () => {
       setIsLoading(true);
       await axios
-        .post("/product/slug", {
+        .post("https://api.end-games.nexthub.io/product/slug", {
           slug: productSlug,
         })
         .then((res) => {
@@ -60,11 +60,12 @@ const ProductPage = () => {
 
   const handleBuyRequest = async () => {
     setIsLoading(true);
-    const auth_token = localStorage.getItem("auth_token");
-    if (!auth_token) {
+
+    if (userRole === -1) {
       navigate("/signin");
       return;
     }
+    const auth_token = localStorage.getItem("auth_token");
     const config = {
       headers: { Authorization: `Bearer ${auth_token}` },
     };
@@ -73,7 +74,7 @@ const ProductPage = () => {
     };
 
     await axios
-      .post("/product/purchase", data, config)
+      .post("https://api.end-games.nexthub.io/product/purchase", data, config)
       .then(() => {
         setIsModalOpen(true);
       })

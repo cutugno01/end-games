@@ -34,12 +34,11 @@ const Signin = () => {
     e.preventDefault();
     setIsLoading(true);
     await axios
-      .post("/user/login", {
+      .post("https://api.end-games.nexthub.io/user/login", {
         email_usr: state.email_usr,
         password: state.password,
       })
       .then((res) => {
-        //console.log(res.data.data.auth_token);
         const auth_token = res.data.data.auth_token;
         window.localStorage.setItem("auth_token", auth_token);
         window.location.reload();

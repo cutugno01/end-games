@@ -47,8 +47,10 @@ function App() {
         headers: { Authorization: `Bearer ${auth_token}` },
       };
       await axios
-        .get("https://api.end-games.nexthub.io/user/fetch", config)
+        .get("http://localhost:8000/user/fetch", config)
         .then((res) => {
+          console.log(res);
+          
           if (res.data.response.code !== 202) {
             return;
           }

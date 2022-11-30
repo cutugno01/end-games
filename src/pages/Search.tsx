@@ -27,7 +27,7 @@ const Search = () => {
         return;
       }
       axios
-        .post("https://api.end-games.nexthub.io/product/search", {
+        .post("http://localhost:8000/product/search", {
           name: inputString,
         })
         .then((res) => {
@@ -93,7 +93,7 @@ const Search = () => {
                   name={product.product_name}
                   price={product.product_price}
                   slug={product.slug}
-                  image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+                  image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
                 />
               );
             })}

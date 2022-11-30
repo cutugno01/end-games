@@ -32,7 +32,7 @@ const UserGames = () => {
         headers: { Authorization: `Bearer ${auth_token}` },
       };
       const res = await axios.get(
-        "https://api.end-games.nexthub.io/user/library/list",
+        "http://localhost:8000/user/library/list",
         config
       );
       setProducts(res.data.data.products);
@@ -50,7 +50,7 @@ const UserGames = () => {
             <Product
               key={product.product_id}
               name={product.product_name}
-              image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+              image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
             />
           );
         })}

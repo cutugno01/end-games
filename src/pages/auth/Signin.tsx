@@ -34,7 +34,7 @@ const Signin = () => {
     e.preventDefault();
     setIsLoading(true);
     await axios
-      .post("https://api.end-games.nexthub.io/user/login", {
+      .post("http://localhost:8000/user/login", {
         email_usr: state.email_usr,
         password: state.password,
       })

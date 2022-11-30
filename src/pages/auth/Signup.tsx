@@ -71,7 +71,7 @@ const Signup = () => {
       return;
     }
     await axios
-      .post("https://api.end-games.nexthub.io/user/signup", {
+      .post("http://localhost:8000/user/signup", {
         email: state.email,
         username: state.username,
         password: state.password,

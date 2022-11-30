@@ -27,7 +27,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const handleRequest = async () => {
       const productsResponse = await axios.get(
-        "https://api.end-games.nexthub.io/product/list"
+        "http://localhost:8000/product/list"
       );
       setProducts(
         productsResponse.data.data.products.filter((product: any) => {
@@ -51,7 +51,7 @@ const CategoryPage = () => {
               name={product.name}
               price={product.price}
               slug={product.slug}
-              image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+              image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
             />
           );
         })}

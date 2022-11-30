@@ -34,7 +34,7 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
     const handleRequest = async () => {
       setIsLoading(true);
       await axios
-        .post("https://api.end-games.nexthub.io/product/slug", {
+        .post("http://localhost:8000/product/slug", {
           slug: productSlug,
         })
         .then((res) => {
@@ -74,7 +74,7 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
     };
 
     await axios
-      .post("https://api.end-games.nexthub.io/product/purchase", data, config)
+      .post("http://localhost:8000/product/purchase", data, config)
       .then(() => {
         setIsModalOpen(true);
       })
@@ -94,7 +94,7 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
       <div className="product-page-img-container">
         <img
           className="product-page-img"
-          src={`https://storage.end-games.nexthub.io/uploads/images/products/${product?.image.name}.${product?.image.type}`}
+          src={`http://localhost/storage/uploads/images/products/${product?.image.name}.${product?.image.type}`}
           alt=""
         />
         <div className="product-page-description-container">

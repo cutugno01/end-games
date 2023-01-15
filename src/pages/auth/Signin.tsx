@@ -13,6 +13,10 @@ const Signin = () => {
   const [showError, setShowError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  /*
+    email_usr => il form di accesso
+    indica che l'utente può accedere inserendo l'email o l'username
+  */
   interface IState {
     email_usr: string;
     password: string;
@@ -33,6 +37,10 @@ const Signin = () => {
   const handleLoginRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    /*
+      Invio della richiesta di accesso
+    */
     await axios
       .post("http://localhost:8000/user/login", {
         email_usr: state.email_usr,

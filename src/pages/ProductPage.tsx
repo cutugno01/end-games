@@ -13,6 +13,9 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
   const navigate = useNavigate();
   const { productSlug } = useParams();
 
+  /*
+    Interfaccia del prodotto
+  */
   interface IProduct {
     name: string;
     price: number;
@@ -33,11 +36,20 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
   useEffect(() => {
     const handleRequest = async () => {
       setIsLoading(true);
+
+      /*
+        Recupero delle informazioni del prodotto tramite slug
+        (dall'URL)
+      */
       await axios
         .post("http://localhost:8000/product/slug", {
           slug: productSlug,
         })
         .then((res) => {
+          /*
+            Prodotto trovato,
+            viene settato lo state con le informazioni
+          */
           setProduct({
             id: res.data.data.product_info.ID,
             name: res.data.data.product_info.name,
@@ -51,6 +63,9 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
           });
         })
         .catch(() => {
+          /*
+            Prodotto non trovato
+          */
           navigate("/404");
         });
       setIsLoading(false);
@@ -61,6 +76,9 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
   const handleBuyRequest = async () => {
     setIsLoading(true);
 
+    /*
+      Utente non loggato
+    */
     if (userRole === -1) {
       navigate("/signin");
       return;
@@ -73,6 +91,9 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
       product_id: product?.id,
     };
 
+    /*
+      L'utente procede con l'acquisto del prodotto
+    */
     await axios
       .post("http://localhost:8000/product/purchase", data, config)
       .then(() => {

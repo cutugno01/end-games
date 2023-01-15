@@ -60,6 +60,7 @@ body{
   background-color: $color-dark-1;
   background-repeat: no-repeat;
   color: $color-white;
+  //evita di far selezionare il testo
   user-select: none;
   min-height: 100vh;
   overflow-x: hidden;

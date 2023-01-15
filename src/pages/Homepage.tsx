@@ -10,6 +10,10 @@ import Product from "../components/Product";
 
 const Homepage = () => {
   const navigate = useNavigate();
+
+  /*
+    Struttura del prodotto
+  */
   interface IProduct {
     ID: number;
     category: string;
@@ -22,6 +26,9 @@ const Homepage = () => {
     image_type: string;
   }
 
+  /*
+    L'hero è il prodotto principale che viene mostrato(grande, in alto)
+  */
   interface IHeroProduct {
     name: string;
     price: number;
@@ -33,6 +40,7 @@ const Homepage = () => {
       type: string;
     };
   }
+
 
   interface ICategory {
     name: string;
@@ -46,14 +54,28 @@ const Homepage = () => {
 
   useEffect(() => {
     const handleRequest = async () => {
+      /*
+        Recupero della lista di prodotti
+      */
       const productsResponse = await axios.get(
         "http://localhost:8000/product/list"
       );
       setProducts(productsResponse.data.data.products);
+
+      /*
+        Viene estratto casualmente un prodotto dalla lista,
+        poi impostato come Hero
+      */
       const heroIndex = Math.floor(
         Math.random() * productsResponse.data.data.products.length
       );
       setHeroIndex(heroIndex);
+
+      /*
+        Il prodotto principale(hero) necessita 
+        della lettura delle informazioni(descrizione ecc)
+
+      */
       const heroProductResponse = await axios.post(
         "http://localhost:8000/product/slug",
         {

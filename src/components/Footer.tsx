@@ -3,13 +3,6 @@ import React from "react";
 const Footer = () => {
   const team = [
     {
-      id: 0,
-      name: "Andrea Cutugno",
-      mat: "515551",
-      role: "Front-end",
-      link: "https://andreacutugno.netlify.app/",
-    },
-    {
       id: 1,
       name: "Samuel Raffa",
       mat: "518206",

@@ -28,6 +28,9 @@ const Signup = () => {
     setIsModalOpen(false);
   };
 
+  /*
+    Interfaccia dei dati da inserire durante la registrazione
+  */
   interface IState {
     email: string;
     username: string;
@@ -59,6 +62,10 @@ const Signup = () => {
   const handleSignupRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    /*
+      Verifica dei campi del form di registrazione
+    */
     if (
       state.username.length < 3 ||
       state.password.length < 8 ||
@@ -70,6 +77,10 @@ const Signup = () => {
     ) {
       return;
     }
+
+    /*
+      Invio della richiesta di registrazione
+    */
     await axios
       .post("http://localhost:8000/user/signup", {
         email: state.email,

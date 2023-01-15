@@ -9,6 +9,9 @@ import LoadingOverlay from "../components/LoadingOverlay";
 const UserGames = () => {
   const navigate = useNavigate();
 
+  /*
+    Interfaccia del prodotto
+  */
   interface IProduct {
     product_id: number;
     product_name: string;
@@ -16,7 +19,7 @@ const UserGames = () => {
     image_name: string;
     image_type: string;
   }
-
+  
   const [products, setProducts] = useState<IProduct[]>();
   const [isLoading, setIsLoading] = useState(false);
 

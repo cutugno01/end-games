@@ -20,6 +20,14 @@ const ForgotPassword = () => {
   const lowercaseRegExp = /(?=.*?[a-z])/;
   const digitsRegExp = /(?=.*?[0-9])/;
   const specialCharRegExp = /(?=.*?[#?!@$%^&*-])/;
+  
+  /*
+    Il recupero della password è diviso in due fasi:
+
+    step => indica la fase del processo
+    client_code => contiene il codice da memorizzare localmente e inviare al momento della verifica
+    email_code => contiene il codice inviato via mail che l'utente dovrà inserire nel form
+  */
   interface IState {
     step: number;
     email: string;
@@ -38,6 +46,9 @@ const ForgotPassword = () => {
     confirmPassword: "",
   });
 
+  /*
+    Passaggio allo step successivo 
+  */
   const nextStep = () => {
     setState((state) => ({
       ...state,
@@ -61,22 +72,39 @@ const ForgotPassword = () => {
 
   const handleRequestCode = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    /*
+      Richiesta del processo di conferma
+    */
     const res = await axios.post(
       "http://localhost:8000/user/reset",
       { email_usr: state.email }
     );
     const client_code = res.data.data.cc;
+
+    /*
+      Si è verificato un errore
+    */
     if (res.status !== 202) {
       setShowError(true);
       return;
     }
     setShowError(false);
+
+    /*
+      Gestione del client code ricevuto
+    */
     handleSetStateValue("client_code", client_code);
     nextStep();
   };
 
   const handleRequestReset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    /*
+      Verifica della nuova password inserita
+      (1 carat. maiuscolo, len >= 8, 1 num, 1 carat. speciale)
+    */
     if (
       state.password.length < 8 ||
       !uppercaseRegExp.test(state.password) ||
@@ -87,6 +115,11 @@ const ForgotPassword = () => {
     ) {
       return;
     }
+
+    /*
+      Conferma del reset(2° step),
+      viene inviata la coppia dei codici di verifica
+    */
     await axios
       .post("http://localhost:8000/user/reset/confirm", {
         client_code: state.client_code,

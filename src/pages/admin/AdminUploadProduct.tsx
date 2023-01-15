@@ -12,6 +12,12 @@ import LoadingOverlay from "../../components/LoadingOverlay";
 const AdminUploadProduct = () => {
   const navigate = useNavigate();
 
+  /*
+    base64Img => L'immagine viene inviata in formato base64,
+    successivamente riconvertita una volta ricevuta dal server
+
+    imgType => Indica l'estensione dell'immagine
+  */
   interface IState {
     name: string;
     price: number;
@@ -38,9 +44,13 @@ const AdminUploadProduct = () => {
   });
 
   const handleSetStateValue = (name: string, value: string) => {
+    /*
+      Il prezzo non può avere più di 5 cifre
+    */
     if (name === "price" && value.length > 5) {
       return;
     }
+
     setState((state) => ({
       ...state,
       [name]: value,
@@ -58,6 +68,9 @@ const AdminUploadProduct = () => {
   const [imgSelectState, setImgSelectState] = useState(false);
 
   useEffect(() => {
+    /*
+      Lettura delle categorie dopo
+    */
     axios.get("http://localhost:8000/category/list").then((res) => {
       if (res.data.response.code !== 202) {
         return;
@@ -67,12 +80,20 @@ const AdminUploadProduct = () => {
   }, []);
 
   const imageHandler = (e: any) => {
+    /*
+      Viene letto il file dal form,
+      ricavata successivamente l'estensione
+    */
     const img = e.target.files[0];
     if (img === undefined || img === null) {
       return;
     }
     const imgType = img.type.split("/").pop();
     handleSetStateValue("imgType", imgType);
+
+    /*
+      Lettura del file in formato base64
+    */
     getBase64(img);
   };
   const onLoad = (fileString: any) => {
@@ -80,6 +101,9 @@ const AdminUploadProduct = () => {
     setImgSelectState(true);
   };
   const getBase64 = (img: any) => {
+    /*
+      Il file viene letto come "dataURL" (base64)
+    */
     let reader = new FileReader();
     reader.readAsDataURL(img);
     reader.onload = () => {
@@ -90,14 +114,21 @@ const AdminUploadProduct = () => {
   const handleUploadRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
     if (state.price < 1) {
       return;
     }
+
     //const floatPrice = parseFloat(state.price.toString());
     const auth_token = localStorage.getItem("auth_token");
     const config = {
       headers: { Authorization: `Bearer ${auth_token}` },
     };
+
+    /*
+      L'immagine appena letta viene inviata
+      insieme alle proprietà del prodotto
+    */
     const data = {
       name: state.name,
       description: state.description,
@@ -110,6 +141,10 @@ const AdminUploadProduct = () => {
         },
       ],
     };
+
+    /*
+      Creazione del prodotto
+    */
     await axios
       .post("http://localhost:8000/product/create", data, config)
       .then(() => {

@@ -26,6 +26,9 @@ const CategoryPage = () => {
 
   useEffect(() => {
     const handleRequest = async () => {
+      /*
+        Recupero della lista di prodotti
+      */
       const productsResponse = await axios.get(
         "http://localhost:8000/product/list"
       );

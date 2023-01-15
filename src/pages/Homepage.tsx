@@ -118,7 +118,7 @@ const Homepage = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               className="store-header-img"
-              src={`https://storage.end-games.nexthub.io/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
+              src={`http://localhost/storage/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
               alt="img"
             />
           )}
@@ -157,7 +157,7 @@ const Homepage = () => {
                   name={product.name}
                   price={product.price}
                   slug={product.slug}
-                  image={`https://storage.end-games.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
+                  image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
                 />
               );
             })}

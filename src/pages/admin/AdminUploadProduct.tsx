@@ -147,11 +147,13 @@ const AdminUploadProduct = () => {
     */
     await axios
       .post("http://localhost:8000/product/create", data, config)
-      .then(() => {
+      .then((response) => {
         setIsModalOpen(true);
+        console.log(response);
       })
-      .catch(() => {
+      .catch((response) => {
         setShowError(true);
+        console.log(response);
       });
     setIsLoading(false);
   };

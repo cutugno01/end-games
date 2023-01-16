@@ -54,7 +54,7 @@ const CategoryPage = () => {
               name={product.name}
               price={product.price}
               slug={product.slug}
-              image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
+              image={`https://storage.endgames.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
             />
           );
         })}

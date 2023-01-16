@@ -115,7 +115,7 @@ const ProductPage = ({ userRole }: { userRole: number }) => {
       <div className="product-page-img-container">
         <img
           className="product-page-img"
-          src={`http://localhost/storage/uploads/images/products/${product?.image.name}.${product?.image.type}`}
+          src={`https://storage.endgames.nexthub.io/uploads/images/products/${product?.image.name}.${product?.image.type}`}
           alt=""
         />
         <div className="product-page-description-container">

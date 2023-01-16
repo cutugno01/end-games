@@ -53,7 +53,7 @@ const UserGames = () => {
             <Product
               key={product.product_id}
               name={product.product_name}
-              image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
+              image={`https://storage.endgames.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
             />
           );
         })}

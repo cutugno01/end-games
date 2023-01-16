@@ -118,7 +118,7 @@ const Homepage = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               className="store-header-img"
-              src={`http://localhost/storage/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
+              src={`https://storage.endgames.nexthub.io/uploads/images/products/${heroProduct?.image.name}.${heroProduct?.image.type}`}
               alt="img"
             />
           )}
@@ -157,7 +157,7 @@ const Homepage = () => {
                   name={product.name}
                   price={product.price}
                   slug={product.slug}
-                  image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
+                  image={`https://storage.endgames.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
                 />
               );
             })}
@@ -193,7 +193,7 @@ const Homepage = () => {
                           name={product.name}
                           price={product.price}
                           slug={product.slug}
-                          image={`http://localhost/storage/uploads/images/products/${product.image_name}.${product.image_type}`}
+                          image={`https://storage.endgames.nexthub.io/uploads/images/products/${product.image_name}.${product.image_type}`}
                         />
                       );
                     })}
